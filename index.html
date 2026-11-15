@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0B1628">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Homelab Notebook">
+  <meta name="description" content="A lightweight notebook for your homelab: hosts, IPs, services, a printable cheat sheet, and a network diagram. Data stays in your browser.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://heemsec.github.io/homelab-notebook/">
+  <meta property="og:title" content="Homelab Notebook">
+  <meta property="og:description" content="Hosts, IPs, and services for a small lab. It stays in the browser, with no account.">
+  <meta property="og:image" content="https://heemsec.github.io/homelab-notebook/icons/icon-512.png">
+  <title>Homelab Notebook</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="pwa.js"></script>
+</head>
+<body>
+  <header class="topbar home-banner">
+    <a class="brand" href="#" aria-label="Homelab Notebook, top of the page">
+      <span class="logo" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" fill="none">
+          <g fill="currentColor">
+            <path fill-rule="evenodd" d="M30 22h48c3.3 0 6 2.7 6 6v52c0 3.3-2.7 6-6 6H30c-3.3 0-6-2.7-6-6V28c0-3.3 2.7-6 6-6zm4 8c-1.1 0-2 .9-2 2v48c0 1.1.9 2 2 2h3V30h-3zm11 8h28v5H45v-5zm0 14h28v5H45v-5zm0 14h18v5H45v-5z"/>
+          </g>
+        </svg>
+      </span>
+      <span class="home-lockup">
+        <span class="home-name">Homelab <b>Notebook</b></span>
+        <span class="home-tag">Keep the lab documented, not just in your head.</span>
+      </span>
+    </a>
+    <div class="top-actions">
+      <label class="search-wrap">
+        <span class="sr-only">Search hosts and services</span>
+        <input id="search" type="search" placeholder="Search name, IP, VLAN, service…" autocomplete="off">
+      </label>
+      <button type="button" id="theme" class="quiet" aria-pressed="false">Light mode</button>
+    </div>
+  </header>
+
+  <div id="conflict-banner" class="banner warn" hidden role="status"></div>
+
+  <nav class="tabs no-print" aria-label="Views">
+    <button type="button" class="tab is-active" data-tab="inventory">Inventory</button>
+    <button type="button" class="tab" data-tab="diagram">Diagram</button>
+    <button type="button" class="tab" data-tab="sheet">Cheat sheet</button>
+  </nav>
+
+  <main>
+    <section id="view-inventory" class="view is-active">
+      <div class="toolbar">
+        <div class="filters" id="filters" role="group" aria-label="Filter by type"></div>
+        <div class="toolbar-actions">
+          <button type="button" id="add-host" class="primary">Add host</button>
+        </div>
+      </div>
+      <form id="quick-add" class="quick-add" autocomplete="off">
+        <p class="quick-label">Quick add</p>
+        <label><span class="sr-only">Name</span><input name="name" required placeholder="Name" maxlength="80"></label>
+        <label>
+          <span class="sr-only">Type</span>
+          <select name="type" id="quick-type"></select>
+        </label>
+        <label><span class="sr-only">IP address</span><input name="ip" placeholder="IP address" inputmode="decimal" autocomplete="off"></label>
+        <label><span class="sr-only">Parent host</span><select name="parentId" id="quick-parent"></select></label>
+        <button type="submit" class="secondary">Add</button>
+      </form>
+      <p id="empty-state" class="empty" hidden>
+        No hosts yet. Add one above, or
+        <button type="button" class="linkish" id="empty-example">load example data</button>
+        to see a small Proxmox lab.
+      </p>
+      <p id="no-results" class="empty" hidden>No hosts match that search.</p>
+      <div id="host-list" class="host-list"></div>
+    </section>
+
+    <section id="view-diagram" class="view" hidden>
+      <div class="section-head">
+        <div>
+          <h2>Network diagram</h2>
+          <p class="help">Built from parent–child links. Routers sit at the top, then hosts, then VMs and LXCs. Click a box to edit that host.</p>
+        </div>
+      </div>
+      <div id="diagram-wrap" class="diagram-wrap">
+        <div id="diagram" class="diagram"></div>
+      </div>
+    </section>
+
+    <section id="view-sheet" class="view" hidden>
+      <div class="section-head no-print">
+        <div>
+          <h2>Cheat sheet</h2>
+          <p class="help">A printable one-pager of every host, IP, and service. Data never leaves this browser.</p>
+        </div>
+        <button type="button" id="print-sheet" class="primary">Print</button>
+      </div>
+      <article id="cheat-sheet" class="cheat-sheet"></article>
+    </section>
+  </main>
+
+  <footer class="no-print">
+    <p>Built for homelabbers, not for advertisers. It all stays in your browser.</p>
+    <p>Everything is stored on this device with <code>localStorage</code>. Nothing is sent to a server.</p>
+    <p><a href="privacy.html">Privacy policy</a></p>
+    <p class="foot-actions">
+      <button type="button" id="export-json" class="quiet">Export JSON</button>
+      <button type="button" id="export-yaml" class="quiet">Export YAML</button>
+      <button type="button" id="import-btn" class="quiet">Import JSON</button>
+      <button type="button" id="load-example" class="quiet">Load example data</button>
+      <button type="button" id="clear-data" class="quiet danger-text">Clear data</button>
+    </p>
+    <p id="saved-meta" class="muted"></p>
+    <input id="import-file" class="sr-only" type="file" accept="application/json,.json">
+  </footer>
+
+  <dialog id="host-dialog" class="modal">
+    <form id="host-form" method="dialog" autocomplete="off">
+      <h2 id="host-dialog-title">Add host</h2>
+      <input type="hidden" name="id">
+      <div class="form-grid">
+        <label>Name
+          <input name="name" required maxlength="80" placeholder="pve1">
+        </label>
+        <label>Type
+          <select name="type" id="host-type" required></select>
+        </label>
+        <label>IP address
+          <input name="ip" placeholder="192.168.1.10" autocomplete="off">
+        </label>
+        <label>MAC <span class="optional">optional</span>
+          <input name="mac" placeholder="bc:24:11:aa:bb:cc" autocomplete="off">
+        </label>
+        <label>VLAN
+          <input name="vlan" placeholder="10 or IoT" maxlength="32">
+        </label>
+        <label>VM / LXC ID
+          <input name="vmid" placeholder="100" maxlength="16">
+        </label>
+        <label class="span-2">Parent host
+          <select name="parentId" id="host-parent"></select>
+        </label>
+        <label class="span-2">Notes
+          <textarea name="notes" rows="3" placeholder="Where it lives, credentials location, caveats…"></textarea>
+        </label>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" class="quiet" id="host-cancel" value="cancel">Cancel</button>
+        <button type="submit" class="primary">Save host</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="service-dialog" class="modal">
+    <form id="service-form" method="dialog" autocomplete="off">
+      <h2 id="service-dialog-title">Add service</h2>
+      <input type="hidden" name="hostId">
+      <input type="hidden" name="id">
+      <div class="form-grid">
+        <label>Name
+          <input name="name" required maxlength="80" placeholder="Proxmox UI">
+        </label>
+        <label>Port
+          <input name="port" placeholder="8006" inputmode="numeric" maxlength="11">
+        </label>
+        <label class="span-2">URL
+          <input name="url" placeholder="https://192.168.1.10:8006" inputmode="url">
+        </label>
+        <label class="span-2">Notes
+          <textarea name="notes" rows="2"></textarea>
+        </label>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" class="quiet" id="service-cancel" value="cancel">Cancel</button>
+        <button type="submit" class="primary">Save service</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

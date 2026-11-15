@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0B1628">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Homelab Notebook">
+  <meta name="description" content="Privacy policy for Homelab Notebook. No account, no analytics, and no server. Your lab stays in the browser.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <title>Privacy policy for Homelab Notebook</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="pwa.js"></script>
+</head>
+<body>
+  <header class="topbar home-banner">
+    <a class="brand" href="index.html" aria-label="Back to Homelab Notebook">
+      <span class="logo" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" fill="none">
+          <g fill="currentColor">
+            <path fill-rule="evenodd" d="M30 22h48c3.3 0 6 2.7 6 6v52c0 3.3-2.7 6-6 6H30c-3.3 0-6-2.7-6-6V28c0-3.3 2.7-6 6-6zm4 8c-1.1 0-2 .9-2 2v48c0 1.1.9 2 2 2h3V30h-3zm11 8h28v5H45v-5zm0 14h28v5H45v-5zm0 14h18v5H45v-5z"/>
+          </g>
+        </svg>
+      </span>
+      <span class="home-lockup">
+        <span class="home-name">Homelab <b>Notebook</b></span>
+        <span class="home-tag">Privacy policy</span>
+      </span>
+    </a>
+    <button type="button" id="theme" class="quiet" aria-pressed="false">Light mode</button>
+  </header>
+  <main style="padding:32px;max-width:72ch">
+    <p class="eyebrow">PRIVACY</p>
+    <h2>Privacy policy</h2>
+    <p class="help" style="margin:12px 0 20px">Effective November 15, 2026. This covers the website and a packaged Android app, if you install one.</p>
+    <h2>No account, and no server</h2>
+    <p>There's no sign-in. No analytics either. Homelab Notebook doesn't keep a backend for your lab. It's a page in your browser, and it doesn't upload your hosts, IPs, or notes.</p>
+    <h2>What stays on this device</h2>
+    <p>Hosts, services, and the theme sit in local storage on this device. Clear the site data and they're gone. Export JSON or YAML writes a file on your device; import reads a file you choose. Nothing in those files is sent to this site.</p>
+    <p>Install the app and a service worker keeps a copy of the pages so it can open offline. That's the app itself, not your notebook being sent anywhere.</p>
+    <h2>Questions</h2>
+    <p>If something here is unclear, open an issue on <a href="https://github.com/heemsec/homelab-notebook/issues">the GitHub issues page for this repo</a>.</p>
+    <p><a href="index.html">Back to the notebook</a></p>
+  </main>
+</body>
+</html>

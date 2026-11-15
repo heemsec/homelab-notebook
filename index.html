@@ -72,21 +72,6 @@
   <div id="conflict-banner" class="banner warn" hidden role="status"></div>
   <div id="lab-summary" class="lab-summary" hidden></div>
 
-  <nav class="tabs no-print" aria-label="Views">
-    <button type="button" class="tab is-active" data-tab="inventory">
-      <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 7h13M8 12h13M8 17h13M3 7h.01M3 12h.01M3 17h.01"/></svg>
-      <span class="tab-label">Inventory</span>
-    </button>
-    <button type="button" class="tab" data-tab="diagram">
-      <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="8" y="14" width="8" height="7" rx="1"/><path d="M6.5 10v2.5H12M17.5 10v2.5H12M12 12.5V14"/></svg>
-      <span class="tab-label">Diagram</span>
-    </button>
-    <button type="button" class="tab" data-tab="sheet">
-      <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 3h8l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M15 3v5h5M8 13h8M8 17h5"/></svg>
-      <span class="tab-label">Cheat sheet</span>
-    </button>
-  </nav>
-
   <main>
     <section id="view-inventory" class="view is-active">
       <div class="toolbar">
@@ -173,6 +158,21 @@
     <input id="import-file" class="sr-only" type="file" accept="application/json,.json">
     <input id="restore-file" class="sr-only" type="file" accept="application/json,.json">
   </footer>
+
+  <nav class="tabs no-print" aria-label="Views">
+    <button type="button" class="tab is-active" data-tab="inventory">
+      <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 7h13M8 12h13M8 17h13M3 7h.01M3 12h.01M3 17h.01"/></svg>
+      <span class="tab-label">Inventory</span>
+    </button>
+    <button type="button" class="tab" data-tab="diagram">
+      <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="8" y="14" width="8" height="7" rx="1"/><path d="M6.5 10v2.5H12M17.5 10v2.5H12M12 12.5V14"/></svg>
+      <span class="tab-label">Diagram</span>
+    </button>
+    <button type="button" class="tab" data-tab="sheet">
+      <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 3h8l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M15 3v5h5M8 13h8M8 17h5"/></svg>
+      <span class="tab-label">Cheat sheet</span>
+    </button>
+  </nav>
 
   <dialog id="host-dialog" class="modal">
     <form id="host-form" method="dialog" autocomplete="off">

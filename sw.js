@@ -1,15 +1,18 @@
 'use strict';
-const CACHE = 'homelab-notebook-shell-v1';
+const CACHE = 'homelab-notebook-shell-v2';
 const FILES = [
   './',
   './index.html',
   './privacy.html',
   './styles.css',
   './theme.js',
+  './labs-core.js',
+  './entitlement.js',
   './app.js',
   './pwa.js',
   './manifest.webmanifest',
   './favicon.svg',
+  './data/power-parts.json',
   './icons/favicon-32.png',
   './icons/icon-192.png',
   './icons/icon-512.png',

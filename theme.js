@@ -16,9 +16,12 @@
     if (meta) meta.content = theme === "light" ? "#F7FBFE" : "#0B1628";
     const button = document.getElementById("theme");
     if (button) {
-      button.textContent = theme === "light" ? "Dark mode" : "Light mode";
-      button.setAttribute("aria-label", `Switch to ${theme === "light" ? "dark" : "light"} mode`);
+      const next = theme === "light" ? "dark" : "light";
+      button.setAttribute("aria-label", `Switch to ${next} mode`);
+      button.setAttribute("title", `Switch to ${next} mode`);
       button.setAttribute("aria-pressed", String(theme === "light"));
+      const label = button.querySelector(".theme-label");
+      if (label) label.textContent = theme === "light" ? "Dark mode" : "Light mode";
     }
   }
   apply();
